@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
+import axios from 'axios';
 
 const SnippetForm = ({ snippets, setSnippets }) => {
   const [title, setTitle] = useState('');
@@ -9,7 +10,7 @@ const SnippetForm = ({ snippets, setSnippets }) => {
   const [code, setCode] = useState('');
 
  // Props: onAdd(snippet)
-const handleAdd = () => {
+const handleAdd = async () => {
   if (!title || !code) return alert("Title and code required");
 
   const newSnippet = {
@@ -20,14 +21,22 @@ const handleAdd = () => {
     code,
   };
 
-  
+  try{
+    const response = await axios.post('http://localhost:5000/api/snippets/add',newSnippet,{
+    headers:{
+      Authorization:`Bearer ${localStorage.getItem("token")}`
+    }
+  })
+    
+  if(response.status==201){
+    alert("new snippet add");
+  }
+  }catch(err){
+    console.log(err);
+  }
 
-  // reset
-  setTitle('');
-  setDescription('');
-  setTags('');
-  setLanguage('javascript');
-  setCode('');
+
+  
 };
 
 

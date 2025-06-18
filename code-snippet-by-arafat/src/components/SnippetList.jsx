@@ -1,6 +1,23 @@
+import { useEffect } from "react";
 import React from "react";
+import axios from "axios";
 
-const SnippetList = ({ snippets, onDelete }) => {
+const SnippetList = ({ snippets,fetchSnippet }) => {
+
+  fetchSnippet();
+
+  const onDelete = async (id)=>{
+    try{
+      await axios.delete(`http://localhost:5000/api/snippets/${id}`,{
+        headers:{
+        Authorization:`Bearer ${localStorage.getItem("token")}`
+    }
+      })
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   const copyToClipboard = (code) => {
     navigator.clipboard.writeText(code);
     alert("📋 Code copied to clipboard!");

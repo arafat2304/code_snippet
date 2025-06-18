@@ -1,15 +1,43 @@
 import React, { useState } from "react";
-import AuthLayout from "../components/AuthLAyout.jsx";
+import AuthLayout from "../components/AuthLayout.jsx";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirm) {
+      alert("Password and Confirm Password do not match");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/signup",{
+        name,
+        email,
+        password
+      })
+
+      if (response.status === 201) {
+        alert("Signup successful");
+        navigate("/login");
+      }
+    } catch (err) {
+      alert(err.response?.data?.msg || "Signup failed");
+      console.log(err);
+    }
+  };
 
   return (
     <AuthLayout title="Create an Account">
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Full Name"

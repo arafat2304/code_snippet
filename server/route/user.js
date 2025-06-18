@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../model/user");
 const dotenv = require("dotenv");
+const verifyToken = require("../meadlewear/userAuth.js");
 dotenv.config()
 
 
@@ -45,11 +46,24 @@ router.post("/login", async (req, res) => {
     const isMatch = await user.comparePassword(password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
     const token = jwt.sign({ id: user._id }, secret, { expiresIn: "7d" });
+    res.cookie("token",token);
     res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
     console.log(err)
     res.status(500).json({ msg: "Server error" });
   }
 });
+
+// GET /api/auth/user for logout 
+router.get("/logout",verifyToken ,(req, res) => {
+  res
+    .clearCookie("token", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false, // change to true in production with HTTPS
+    })
+    .json({ msg: "Logged out successfully" });
+});
+
 
 module.exports = router;

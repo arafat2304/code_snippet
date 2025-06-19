@@ -3,7 +3,7 @@ import Editor from '@monaco-editor/react';
 import axios from 'axios';
 import boilerPlate from './boilerPlate';
 
-const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet }) => {
+const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet,  darkMode }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState('');
@@ -145,7 +145,7 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet }) => {
       <Editor
         height="250px"
         language={language}
-        theme="vs-dark"
+        theme={darkMode ?  "light" : "hc-black"}
         value={code}
         onChange={(value) => setCode(value || '')}
       />
@@ -153,12 +153,14 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet }) => {
       <div className="flex justify-between mt-3 gap-2">
         <button
           onClick={handleSubmit}
+          id="save-snippet-btn"
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           {editingSnippet ? '💾 Update Snippet' : '➕ Add Snippet'}
         </button>
         <button
           onClick={handleReset}
+          id="reset-form-btn"
           className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
         >
           ♻️ Reset

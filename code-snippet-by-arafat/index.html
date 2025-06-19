@@ -7,7 +7,16 @@
   
 
   <!-- ✅ Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script>
+  tailwind.config = {
+    darkMode: 'class', // ✅ Required
+    theme: {
+      extend: {},
+    }
+  }
+</script>
+
   </head>
   <body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
     <div id="root"></div>

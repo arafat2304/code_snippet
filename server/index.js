@@ -10,8 +10,9 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-
+//snippets route api entry point
 app.use('/api/snippets', snippetRoutes);
+//user route api entry point
 app.use('/api/auth',userRoutes)
 
 mongoose.connect(process.env.MONGO_URL, {

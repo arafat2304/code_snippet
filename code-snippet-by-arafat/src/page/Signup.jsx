@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AuthLayout from "../components/AuthLayout.jsx";
+import AuthLayout from "../components/AuthLAyout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signup",{
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/signup`,{
         name,
         email,
         password

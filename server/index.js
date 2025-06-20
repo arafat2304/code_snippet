@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use('/api/snippets', snippetRoutes);
 app.use('/api/auth',userRoutes)
 
-mongoose.connect('mongodb://localhost:27017/snippetDB', {
+mongoose.connect(process.env.MONGO_URL, {
 }).then(() => {
   console.log('MongoDB connected');
   app.listen(5000, () => console.log('Server started on port 5000'));

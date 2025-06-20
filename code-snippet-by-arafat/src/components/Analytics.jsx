@@ -1,18 +1,23 @@
-// ✅ components/Analytics.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Analytics = () => {
   const [stats, setStats] = useState(null);
+  const navigate = useNavigate(); // ✅ Hook for redirection
 
+  // Fetch analytics data from the server
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/snippets/stats/overview", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/api/snippets/stats/overview`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setStats(res.data);
       } catch (err) {
         console.error("Failed to fetch stats:", err);
@@ -25,7 +30,16 @@ const Analytics = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4 bg-white dark:bg-gray-900 text-black dark:text-white min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">📊 Snippet Analytics Dashboard</h1>
+      {/* 🔙 Back to Home Button */}
+      <div className="mb-6 flex justify-between items-center">
+        <h1 className="text-2xl font-bold">📊 Snippet Analytics Dashboard</h1>
+        <button
+          onClick={() => navigate("/home")}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-semibold transition-all"
+        >
+          🏠 Back to Home
+        </button>
+      </div>
 
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded">
@@ -42,7 +56,9 @@ const Analytics = () => {
         <h2 className="text-lg font-semibold mb-2">🧠 Snippets by Language</h2>
         <ul className="list-disc pl-5">
           {Object.entries(stats.languages).map(([lang, count]) => (
-            <li key={lang}>{lang.toUpperCase()}: {count}</li>
+            <li key={lang}>
+              {lang.toUpperCase()}: {count}
+            </li>
           ))}
         </ul>
       </div>
@@ -53,7 +69,9 @@ const Analytics = () => {
           {stats.recent.map((s) => (
             <li key={s._id} className="border-b border-gray-300 pb-2">
               <p className="font-bold">{s.title}</p>
-              <p className="text-sm text-gray-500">{new Date(s.createdAt).toLocaleString()}</p>
+              <p className="text-sm text-gray-500">
+                {new Date(s.createdAt).toLocaleString()}
+              </p>
               <p className="text-sm">{s.language}</p>
             </li>
           ))}

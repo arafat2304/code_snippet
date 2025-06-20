@@ -30,7 +30,7 @@ router.post('/add', verifyToken,async (req, res) => {
   res.status(201).json(snippet);
 });
 
-// ✅ DELETE (soft delete to trash)
+// DELETE (soft delete to trash)
 router.put("/trash/:id", verifyToken, async (req, res) => {
   try {
     await Snippet.findOneAndUpdate(
@@ -43,7 +43,7 @@ router.put("/trash/:id", verifyToken, async (req, res) => {
   }
 });
 
-// ✅ RESTORE from trash
+// RESTORE from trash
 router.put("/restore/:id", verifyToken, async (req, res) => {
   try {
     await Snippet.findOneAndUpdate(
@@ -56,7 +56,7 @@ router.put("/restore/:id", verifyToken, async (req, res) => {
   }
 });
 
-// ✅ DELETE permanently
+// DELETE permanently
 router.delete("/permanent/:id", verifyToken, async (req, res) => {
   try {
     await Snippet.findOneAndDelete({ _id: req.params.id});
@@ -67,12 +67,11 @@ router.delete("/permanent/:id", verifyToken, async (req, res) => {
 });
 
 
-// ✅ TOGGLE favorite
+// TOGGLE favorite
 router.put("/favorite/:id", verifyToken, async (req, res) => {
   
   try {
     const { favorite } = req.body;
-    console.log(favorite)
     await Snippet.findOneAndUpdate({ _id: req.params.id }, { favorite });
     res.json({ msg: "Favorite updated" });
   } catch (err) {
@@ -80,7 +79,7 @@ router.put("/favorite/:id", verifyToken, async (req, res) => {
   }
 });
 
-// ✅ Toggle public/private
+// Toggle public/private
 router.put("/toggle-public/:id", verifyToken, async (req, res) => {
   try {
     const snippet = await Snippet.findOne({ _id: req.params.id, user: req.user.id });
@@ -93,7 +92,7 @@ router.put("/toggle-public/:id", verifyToken, async (req, res) => {
   }
 });
 
-// ✅ Get public snippet without auth
+// Get public snippet without auth
 router.get("/public/:id", async (req, res) => {
   try {
     const snippet = await Snippet.findOne({ _id: req.params.id, public: true });
@@ -103,30 +102,6 @@ router.get("/public/:id", async (req, res) => {
     res.status(500).json({ msg: "Error fetching snippet" });
   }
 });
-
-
-
-// ✅ Update a snippet by ID
-// router.put("/:id", verifyToken, async (req, res) => {
-//   const { title, description, tags, language, code } = req.body;
-
-//   try {
-//     const snippet = await Snippet.findOne({ _id: req.params.id, user: req.user.id });
-//     if (!snippet) return res.status(404).json({ msg: "Snippet not found" });
-
-//     snippet.title = title;
-//     snippet.description = description;
-//     snippet.tags = tags;
-//     snippet.language = language;
-//     snippet.code = code;
-
-//     await snippet.save();
-//     res.status(200).json({ msg: "Snippet updated", snippet });
-//   } catch (err) {
-//     console.error("Error updating snippet:", err);
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// });
 
 // Update a snippet (with versioning)
 router.put('/:id', verifyToken, async (req, res) => {
@@ -161,7 +136,7 @@ router.put('/:id', verifyToken, async (req, res) => {
   }
 });
 
-// 🔍 Get version history of a snippet
+// Get version history of a snippet
 router.get("/:id/versions", verifyToken, async (req, res) => {
   try {
     const snippet = await Snippet.findOne({ _id: req.params.id, user: req.user.id });
@@ -208,7 +183,7 @@ router.put("/:id/revert/:versionId", verifyToken, async (req, res) => {
   }
 });
 
-// 📊 Get snippet analytics for logged-in user
+// Get snippet analytics for logged-in user
 router.get("/stats/overview", verifyToken, async (req, res) => {
   try {
     const allSnippets = await Snippet.find({ user: req.user.id, trashed: false });

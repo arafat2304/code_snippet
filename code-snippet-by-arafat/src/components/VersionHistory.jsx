@@ -6,10 +6,11 @@ const VersionHistory = ({ snippetId, onClose, onRevert }) => {
   const [versions, setVersions] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  //this function is used to fetch hostory of code
   useEffect(() => {
     const fetchVersions = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/snippets/${snippetId}/versions`, {
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/snippets/${snippetId}/versions`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

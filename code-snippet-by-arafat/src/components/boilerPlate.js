@@ -1,3 +1,5 @@
+//This file is provide all type of language boilerplate Code
+
 const boilerplates = {
   html: `<!DOCTYPE html>
 <html>

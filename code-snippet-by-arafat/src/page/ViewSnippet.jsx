@@ -8,7 +8,7 @@ const ViewSnippet = () => {
   const [snippet, setSnippet] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/snippets/public/${id}`)
+    axios.get(`${import.meta.env.VITE_BASE_URL}/api/snippets/public/${id}`)
       .then(res => setSnippet(res.data))
       .catch(() => setSnippet(null));
   }, [id]);

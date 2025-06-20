@@ -10,6 +10,7 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet,  darkM
   const [language, setLanguage] = useState('javascript');
   const [code, setCode] = useState('');
 
+  // this useEffect is used for Edit Snippet
   useEffect(() => {
     if (editingSnippet) {
       setTitle(editingSnippet.title || '');
@@ -20,7 +21,10 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet,  darkM
     }
   }, [editingSnippet]);
 
+  // this is handlesubmit which will trigger when user add new snippet
   const handleSubmit = async () => {
+
+    //this is ensure that title and code is must be other wise give alert message
     if (!title || !code) {
       alert("Title and code required");
       return;
@@ -35,10 +39,10 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet,  darkM
     };
 
     try {
+      //here is editing snippet is exist so axios called put method for edit
       if (editingSnippet) {
-        // Update existing
         await axios.put(
-          `http://localhost:5000/api/snippets/${editingSnippet._id}`,
+          `${import.meta.env.VITE_BASE_URL}/api/snippets/${editingSnippet._id}`,
           snippetData,
           {
             headers: {
@@ -49,9 +53,9 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet,  darkM
         alert("Snippet updated ✅");
         setEditingSnippet(null);
       } else {
-        // Create new
+        // if editing snippet is not exist so axios called post method for new snippet
         const response = await axios.post(
-          'http://localhost:5000/api/snippets/add',
+          `${import.meta.env.VITE_BASE_URL}/api/snippets/add`,
           snippetData,
           {
             headers: {
@@ -128,8 +132,9 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet,  darkM
             {lang.toUpperCase()}
           </option>
         ))}
-      </select> 
+      </select>
 
+      
       {!code.trim() && boilerPlate[language] && (
         <div className="mb-2 text-sm text-blue-700 bg-blue-100 p-2 rounded">
           💡 Need help?{" "}

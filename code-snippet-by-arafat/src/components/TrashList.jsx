@@ -4,10 +4,11 @@ import axios from "axios";
 const TrashList = ({ snippets, setSnippets, fetchSnippet }) => {
   const trashed = snippets.filter((s) => s.trashed);
 
+  //this function is used to restore trash snippet
   const restoreSnippet = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/snippets/restore/${id}`,
+        `${import.meta.env.VITE_BASE_URL}/api/snippets/restore/${id}`,
         {},
         {
           headers: {
@@ -21,9 +22,10 @@ const TrashList = ({ snippets, setSnippets, fetchSnippet }) => {
     }
   };
 
+  // this function is used to delete permanent trash snippet
   const deleteForever = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/snippets/permanent/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/snippets/permanent/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const LoginPage = () => {
       
 
     }catch(err){
-      console.log(err);
+      err.response?.data?.msg ? setError(err.response.data.msg) : setError("Login failed");
     }
   }
 
@@ -48,6 +49,10 @@ const LoginPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
+        <span className="text-red-500 mt-5 text-lg text-center">
+          {error} 
+        </span>
 
         <button
           type="submit"

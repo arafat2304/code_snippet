@@ -71,7 +71,7 @@ node index.js
 
 Server runs at: `http://localhost:5000`
 
-### 3. 💻 Frontend Setup (client/)
+### 3. 💻 Frontend Setup (code-snippet-by-arafat/)
 
 ```bash
 cd code-snippet-by-arafat
@@ -81,20 +81,11 @@ npm run dev
 
 Frontend runs at: `http://localhost:5173`
 
-## 📹 Demo Video
-
-Watch the walkthrough: [📺 Demo Link](https://your-demo-link.com)
-
 
 ## 🌐 Live Deployment (optional)
 
-Frontend (Netlify): [https://your-netlify-link](https://your-netlify-link)
-Backend (Render): [https://your-backend-api.onrender.com](https://your-backend-api.onrender.com)
-
-
-## 📄 License
-
-This project is for educational and portfolio use only.
+Frontend (Netlify): https://code-snippet-ashen.vercel.app/
+Backend (Render): https://code-snippet-backend-85fz.onrender.com
 
 
 ## ✍️ Author

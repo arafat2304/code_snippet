@@ -39,7 +39,6 @@ const snippetSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  // field to store old versions
   versions: [versionSchema],
 });
 

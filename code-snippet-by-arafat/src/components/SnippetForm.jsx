@@ -50,7 +50,7 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet,  darkM
             },
           }
         );
-        alert("Snippet updated ✅");
+        alert("Snippet updated ");
         setEditingSnippet(null);
       } else {
         // if editing snippet is not exist so axios called post method for new snippet
@@ -65,7 +65,7 @@ const SnippetForm = ({ onSnippetAdded, editingSnippet, setEditingSnippet,  darkM
         );
 
         if (response.status === 201) {
-          alert("New snippet added ✅");
+          alert("New snippet added ");
         }
       }
 

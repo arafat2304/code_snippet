@@ -60,7 +60,7 @@ router.get("/logout",verifyToken ,(req, res) => {
     .clearCookie("token", {
       httpOnly: true,
       sameSite: "lax",
-      secure: false, // change to true in production with HTTPS
+      secure: true, 
     })
     .json({ msg: "Logged out successfully" });
 });

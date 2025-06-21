@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Analytics = () => {
   const [stats, setStats] = useState(null);
-  const navigate = useNavigate(); // ✅ Hook for redirection
+  const navigate = useNavigate(); //Hook for redirection
 
   // Fetch analytics data from the server
   useEffect(() => {

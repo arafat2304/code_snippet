@@ -149,7 +149,7 @@ router.get("/:id/versions", verifyToken, async (req, res) => {
   }
 });
 
-// 🔁 Revert snippet to a previous version
+// Revert snippet to a previous version
 router.put("/:id/revert/:versionId", verifyToken, async (req, res) => {
   try {
     const snippet = await Snippet.findOne({ _id: req.params.id, user: req.user.id });
